@@ -1,0 +1,1 @@
+include nbconvert_terminal/templates/*.tpl
