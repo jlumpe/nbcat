@@ -30,6 +30,9 @@ setup(
 		'pygments~=2.2',
 	],
 	entry_points={
+		'console_scripts': [
+			'jupyter-nbview = nbconvert_terminal.app:main',
+		],
 		'nbconvert.exporters': [
 			'terminal = nbconvert_terminal:TerminalExporter',
 		],

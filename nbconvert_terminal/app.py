@@ -93,3 +93,6 @@ class NbTerminalApp(NbConvertApp):
 			raise NoStart()
 
 		super().start()
+
+
+main = NbTerminalApp.launch_instance
