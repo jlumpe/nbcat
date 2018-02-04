@@ -84,7 +84,11 @@ class NbTerminalApp(NbConvertApp):
 
 	def print_styles_list(self):
 		"""Print list of Pygments styles."""
-		print(*sorted(get_all_styles()), sep='\n')
+		# print(*sorted(get_all_styles()), sep='\n')
+
+		# Run the corresponding command from pygment's CLI, also prints descriptions
+		from pygments.cmdline import main
+		main(['pygmentize', '-L', 'styles'])
 
 	def start(self):
 		# If list_styles flag set, print styles list and quit
