@@ -1,7 +1,7 @@
 # nbconvert-terminal
 
-Extends `jupyter nbconvert` to enable viewing contents of `.ipynb` files in the terminal.
-
+Extends `jupyter nbconvert` to enable viewing contents of `.ipynb` files in the terminal. You can use it to easily inspect the
+contents of notebook files without having to start the notebook server.
 
 ## Command line usage
 
