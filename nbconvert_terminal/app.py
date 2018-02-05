@@ -6,7 +6,7 @@ as best I could from source of NbConvertApp.
 
 from jupyter_core.application import NoStart
 from nbconvert.nbconvertapp import NbConvertApp
-from traitlets import Unicode, Bool, DottedObjectName
+from traitlets import Unicode, Bool, DottedObjectName, default
 from pygments.styles import get_all_styles
 
 from .exporter import TerminalExporter
@@ -49,6 +49,11 @@ class NbTerminalApp(NbConvertApp):
 	name = 'jupyter-nbview'
 	aliases = app_aliases
 	flags = app_flags
+
+	# Use nbconvert's config file
+	@default('config_file_name')
+	def _default_config_file_name(self):
+		return 'jupyter_nbconvert_config'
 
 	# Override CLI documentation
 	description = Unicode('''
