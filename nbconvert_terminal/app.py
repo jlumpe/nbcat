@@ -18,10 +18,9 @@ app_aliases = dict(NbConvertApp.aliases)
 # These are fixed
 del app_aliases['to']
 del app_aliases['nbformat']
+del app_aliases['writer']
 
-# This is overridden, use name of new class
-app_aliases['writer'] = 'NbTerminalApp.writer_class'
-
+# New aliases
 app_aliases['style'] = 'TerminalExporter.syntax_style'
 
 
@@ -29,6 +28,8 @@ app_aliases['style'] = 'TerminalExporter.syntax_style'
 app_flags = dict(NbConvertApp.flags)
 del app_flags['stdout']  # This is now the default
 del app_flags['inplace']  # Only relevant when converting to notebook format
+del app_flags['generate-config']  # Uses nbconvert's, don't want to overwrite.
+
 
 # New flags
 app_flags.update({
@@ -57,6 +58,7 @@ class NbTerminalApp(NbConvertApp):
 		return 'jupyter_nbconvert_config'
 
 	# Override CLI documentation
+	# Indentation gets stripped here
 	description = Unicode('''
 		View contents of notebook files (*.ipynb) in the terminal.
 
