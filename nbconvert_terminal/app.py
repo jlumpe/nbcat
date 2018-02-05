@@ -32,9 +32,10 @@ del app_flags['inplace']  # Only relevant when converting to notebook format
 
 # New flags
 app_flags.update({
-	'256colors': (
+	'256color': (
 		{'TerminalExporter': {'use_256_colors': True}},
-		'Use ANSI 256 color mode.',
+		'Use ANSI 256 color mode. Enabled by default if your terminal supports'
+		' it (TERM environment variable is "xterm-256color").'
 	),
 	'list-styles': (
 		{'NbTerminalApp': {'list_styles': True}},

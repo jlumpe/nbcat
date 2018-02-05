@@ -3,7 +3,7 @@
 import os
 import os.path
 
-from traitlets import Bool, Unicode, validate, TraitError
+from traitlets import Bool, Unicode, validate, TraitError, default
 from traitlets.config import Config
 from nbconvert.exporters import TemplateExporter
 from pygments import highlight
@@ -66,10 +66,16 @@ class TerminalExporter(TemplateExporter):
 		config=True,
 		help='Use ANSI 256 color mode',
 	)
+
+	@default('use_256_colors')
+	def _default_use_256_colors(self):
+		# Just check the $TERM environment variable
+		return os.environ.get('TERM', '') == 'xterm-256color'
+
 	syntax_style = Unicode(
 		default_value='default',
 		config=True,
-		help='Pygments style name for coloring output. Only works in 256 color mode',
+		help='Pygments style name for coloring output. This is ignored unless in 256 color mode.',
 	)
 
 	@validate('syntax_style')
