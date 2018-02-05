@@ -1,4 +1,4 @@
-"""Setuptools installation script for nbconvert-terminal package."""
+"""Setuptools installation script for nbcat package."""
 
 import os
 from setuptools import setup, find_packages
@@ -17,12 +17,12 @@ VERSION = '0.0.1'
 
 
 setup(
-	name='nbconvert-terminal',
+	name='nbcat',
 	version=VERSION,
-	description='Jupyter nbconvert extension for viewing notebooks in the terminal.',
+	description='Print formatted contents of Jupyter notebooks to the terminal.',
 	long_description=long_description,
 	author='Jared Lumpe',
-	url='https://github.com/jlumpe/nbconvert-terminal',
+	url='https://github.com/jlumpe/nbcat',
 	license='MIT',
 	packages=find_packages(),
 	install_requires=[
@@ -31,10 +31,10 @@ setup(
 	],
 	entry_points={
 		'console_scripts': [
-			'jupyter-nbview = nbconvert_terminal.app:main',
+			'nbcat = nbcat.app:main',
 		],
 		'nbconvert.exporters': [
-			'terminal = nbconvert_terminal:TerminalExporter',
+			'terminal = nbcat:TerminalExporter',
 		],
 	},
 	include_package_data=True,

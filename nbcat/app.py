@@ -9,7 +9,7 @@ from nbconvert.nbconvertapp import NbConvertApp
 from traitlets import Unicode, Bool, DottedObjectName, default
 from pygments.styles import get_all_styles
 
-from .exporter import TerminalExporter
+from .terminal_exporter import TerminalExporter
 
 
 # Override aliases
@@ -39,16 +39,16 @@ app_flags.update({
 		' it (TERM environment variable is "xterm-256color").'
 	),
 	'list-styles': (
-		{'NbTerminalApp': {'list_styles': True}},
+		{'NbcatApp': {'list_styles': True}},
 		'List available syntax highlighting styles.'
 	),
 })
 
 
-class NbTerminalApp(NbConvertApp):
+class NbcatApp(NbConvertApp):
 
 	# Override CLI argument and stuff
-	name = 'jupyter-nbview'
+	name = 'nbcat'
 	aliases = app_aliases
 	flags = app_flags
 
@@ -81,7 +81,7 @@ class NbTerminalApp(NbConvertApp):
 	# Seems to be the list of Configurable classes used the the application
 	@property
 	def classes(self):
-		return super().classes + [NbTerminalApp, TerminalExporter]
+		return super().classes + [NbcatApp, TerminalExporter]
 
 	# Triggers listing of Pygments styles instead of converting
 	list_styles = Bool(
@@ -107,4 +107,4 @@ class NbTerminalApp(NbConvertApp):
 		super().start()
 
 
-main = NbTerminalApp.launch_instance
+main = NbcatApp.launch_instance

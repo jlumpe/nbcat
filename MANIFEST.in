@@ -1,1 +1,1 @@
-include nbconvert_terminal/templates/*.tpl
+include nbcat/templates/*.tpl
