@@ -2,12 +2,18 @@
 
 
 {# Macro for section headers #}
-{% macro section(text, col='bblack') -%}
+{% macro section_head(text, col='bblack') -%}
 {{ ('---- [' + text + '] ----') | color(col) }}
 {%- endmacro %}
 
-{% macro end_section(col='bblack') -%}
-{{ ('---- / ----') | color(col) }}
+{% macro section_tail(text, col='bblack') -%}
+{{ ('---- /' + text + '  ----') | color(col) }}
+{%- endmacro %}
+
+{% macro section(text, col='bblack') -%}
+{{ section_head(text, col) }}
+{{ caller() }}
+{{ section_tail(text, col) }}
 {%- endmacro %}
 
 
@@ -19,7 +25,7 @@
 {%- endmacro %}
 
 
-{# Blank lines between cells #}
+{# Two blank lines between cells #}
 {% block any_cell -%}
 {{ super() }}
 
@@ -43,41 +49,45 @@
 
 {# Input with syntax highlighting #}
 {% block input %}
-{{ cell.source | syntax | indent }}
+{{ cell.source | syntax | trim | indent }}
+
 {% endblock input %}
-
-
-{% block outputs %}
-{{- super() | indent -}}
-{% endblock outputs %}
 
 
 {# Execution result #}
 {% block execute_result scoped %}
-{{ section('>>>') }}
-{{ output.data['text/plain'] }}
+{%- if cell.outputs | length > 1 %}
+{{ '>>>' | color('bblack') }}
+{%- endif %}
+{{ output.data['text/plain'] | indent }}
 {%- endblock execute_result %}
 
 
 {# Stream output #}
 {% block stream_stdout %}
-{{ section('stdout') }}
-{{ output.text | trim }}
+{{ '[stdout]' | color('bblack') }}
+{{ output.text | trim | indent }}
 {%- endblock stream_stdout %}
 
 
 {% block stream_stderr %}
-{{ section('stderr') }}
-{{ output.text | trim | color('bred') }}
+{{ '[stderr]' | color('bblack')  }}
+{{ output.text | trim | color('bred') | indent }}
 {%- endblock stream_stderr %}
 
 
 {# Markdown cells with syntax highlighting #}
 {% block markdowncell scoped -%}
-{{ section('md', 'bblue') }}
+{% call section('md', 'bblue') -%}
 {{ cell.source | syntax('md') | indent }}
-{{ end_section('bblue') }}
+{%- endcall  %}
 {%- endblock markdowncell %}
+
+{% block rawcell scoped -%}
+{% call section('raw', 'cyan') -%}
+{{ cell.source | indent }}
+{%- endcall %}
+{%- endblock rawcell %}
 
 
 {# Don't strip ANSI codes from traceback lines #}
